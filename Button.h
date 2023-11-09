@@ -9,7 +9,9 @@
 #define Button_h
 #include "Arduino.h"
 
-//#define LEVEL_HIGH
+#ifndef LEVEL_HIGH
+  #define LEVEL_HIGH 1
+#endif
 
 class Button
 {
@@ -23,7 +25,7 @@ class Button
 		bool released();
 		bool has_changed();
 		uint32_t time_changed();
-#ifdef 	LEVEL_HIGH
+#if 	LEVEL_HIGH
 		const static bool PRESSED = LOW;
 		const static bool RELEASED = HIGH;
 #else
