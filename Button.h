@@ -9,14 +9,12 @@
 #define Button_h
 #include "Arduino.h"
 
-#ifndef LEVEL_HIGH
-  #define LEVEL_HIGH 1
-#endif
+// #define LEVEL_HIGH
 
 class Button
 {
 	public:
-		Button(uint8_t pin);
+		Button(uint8_t pin = 2, bool lvl = LOW);
 		void begin();
 		bool read();
 		bool toggled();
@@ -25,7 +23,7 @@ class Button
 		bool released();
 		bool has_changed();
 		uint32_t time_changed();
-#if 	LEVEL_HIGH
+#ifdef 	LEVEL_HIGH
 		const static bool PRESSED = LOW;
 		const static bool RELEASED = HIGH;
 #else
@@ -34,6 +32,7 @@ class Button
 #endif
 	
 	private:
+		bool     _level_press;
 		uint8_t  _pin;
 		uint16_t _delay;
 		bool     _state;

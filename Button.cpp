@@ -7,8 +7,9 @@
 #include "Button.h"
 #include <Arduino.h>
 
-Button::Button(uint8_t pin)
+Button::Button(uint8_t pin, bool _lvl)
 :  _pin(pin)
+,  _level_press(_lvl)
 ,  _delay(50)
 ,  _state(RELEASED)
 ,  _ignore_until(0)
@@ -69,7 +70,7 @@ uint32_t Button::time_changed()
 // has the button gone from off -> on
 bool Button::pressed()
 {
-	if (read() == PRESSED && has_changed() == true)
+	if (read() == _level_press && has_changed() == true)
 		return true;
 	else
 		return false;
@@ -78,7 +79,7 @@ bool Button::pressed()
 // has the button gone from off -> on
 bool Button::pressedHold(uint32_t time)
 {
-	if (read() == PRESSED && (time_changed() > time))
+	if (read() == _level_press && (time_changed() > time))
 		return true;
 	else
 		return false;
@@ -87,7 +88,7 @@ bool Button::pressedHold(uint32_t time)
 // has the button gone from on -> off
 bool Button::released()
 {
-	if (read() == RELEASED && has_changed() == true)
+	if (read() == !_level_press && has_changed() == true)
 		return true;
 	else
 		return false;
